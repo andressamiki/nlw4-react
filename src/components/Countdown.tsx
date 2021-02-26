@@ -1,45 +1,23 @@
-import { useContext,useEffect,useState } from 'react';
+import { useContext } from 'react';
+import { CountdownContext } from '../contexts/CountdownContext';
 import styles from '../styles/components/Countdown.module.css';
-import { ChallengeContext } from '../contexts/ChallengeContext';
 
-let countdownTimeout: NodeJS.Timeout;
+import { FiPlayCircle, FiXCircle } from 'react-icons/fi';
 
 export function Countdown() {
-  const { startNewChallenge } = useContext(ChallengeContext);
-
-  const [time, setTime] = useState(25 * 60);
-  const [isActive, setIsActive] = useState(false);
-  const [hasFinished, setHasFinished] = useState(false);
-
-  const minutes = Math.floor(time / 60);
-  const seconds = time % 60;
+  const {
+    minutes,
+    seconds,
+    hasFinished,
+    isActive,
+    startCountdown,
+    resetCountdown,
+  } = useContext(CountdownContext);
 
   const [minutLeft, minutRight] = String(minutes).padStart(2, '0').split('');
   const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('');
-  function startCountdown() {
-    setIsActive(true);
-  }
 
-  function resetCountdown() {
-    clearTimeout(countdownTimeout);
-    setIsActive(false);
-    setTime(25 * 60);
-  }
-
-  //dispara algo
-  useEffect(() => {
-    if (isActive && time > 0) {
-      countdownTimeout = setTimeout(() => {
-        setTime(time - 1);
-      }, 1000);
-    } else if (isActive && time == 0) {
-      setHasFinished(true);
-      setIsActive(false);
-      startNewChallenge();
-    }
-  }, [isActive, time]);
-
-    return (
+  return (
     <div>
       <div className={styles.CountdownContainer}>
         <div>
@@ -66,6 +44,7 @@ export function Countdown() {
               onClick={resetCountdown}
             >
               Abandonar
+              <FiXCircle size={22} />
             </button>
           ) : (
             <button
@@ -74,6 +53,7 @@ export function Countdown() {
               onClick={startCountdown}
             >
               Começar a contagem
+              <FiPlayCircle size={22} />
             </button>
           )}
         </>

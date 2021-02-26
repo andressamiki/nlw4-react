@@ -1,16 +1,25 @@
 .container {
-    height: 100vh;
-    max-width: 992px;
-    margin: 0 auto;
-    padding: 2.5rem 2rem;  
-    display: flex;
-    flex-direction: column;
+  height: 100vh;
+  max-width: 992px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .container section {
-    flex: 1;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6.25rem;
-    align-content: center;
+  flex: 1;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6.25rem;
+  align-content: center;
+}
+
+@media (max-width: 768px) {
+  .container section {
+    grid-template-columns: 1fr;
+    padding: 5rem 0 3rem;
+  }
 }
